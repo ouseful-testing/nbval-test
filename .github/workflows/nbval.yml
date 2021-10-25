@@ -16,7 +16,9 @@ jobs:
       image: ouvocl/vce-tm351-monolith
     steps:
     - uses: actions/checkout@master
-    - name: Run a test
+    - name: Install nbval (TH edition)
       run: |
         python3 -m pip install --user --upgrade git+https://github.com/ouseful-PR/nbval.git@table-test
+    - name: Run tests
+      run: |
         py.test --nbval test.ipynb 
