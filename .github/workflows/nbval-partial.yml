@@ -14,8 +14,6 @@ jobs:
 #        ref: nbval-test-tags
     - id: files
       uses: jitterbit/get-changed-files@v1
-      with:
-        format: 'ipynb'
     - name: Install nbval (TH edition)
       run: |
         python3 -m pip install --upgrade git+https://github.com/ouseful-PR/nbval.git@table-test
@@ -29,5 +27,7 @@ jobs:
     - name: test changed files
       run: |
         for changed_file in ${{ steps.files.outputs.all }}; do
-          py.test  --nbval .${changed_file} || continue
+          if [[ ${changed_file} == *.ipynb ]] then
+           py.test  --nbval ${changed_file} || continue
+          fi
         done
