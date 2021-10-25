@@ -1,0 +1,22 @@
+name: nbval-test
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'     
+        required: true
+        default: 'warning'
+      tags:
+        description: 'Push to pypi' 
+
+jobs:
+  nbval-demo:
+    runs-on: ubuntu-latest
+    container:
+      image: ouvocl/vce-tm351-monolith
+    steps:
+    - uses: actions/checkout@master
+    - name: Run a test
+      run: |
+        python3 -m pip install --user --upgrade git+https://github.com/ouseful-PR/nbval.git@table-test
+        py.test --nbval test.ipynb 
