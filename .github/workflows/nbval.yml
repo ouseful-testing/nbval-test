@@ -7,7 +7,7 @@ on:
         required: true
         default: 'warning'
       tags:
-        description: 'Push to pypi' 
+        description: 'Testing nbval' 
 
 jobs:
   nbval-demo:
