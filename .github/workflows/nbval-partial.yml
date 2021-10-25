@@ -1,0 +1,33 @@
+name: nbval-partial-test
+on:
+  push:
+    paths:
+      - "**.ipynb"
+jobs:
+  nbval-partial-demo:
+    runs-on: ubuntu-latest
+    container:
+      image: ouvocl/vce-tm351-monolith
+    steps:
+    - uses: actions/checkout@master
+#      with:
+#        ref: nbval-test-tags
+    - id: files
+      uses: jitterbit/get-changed-files@v1
+      with:
+        format: 'ipynb'
+    - name: Install nbval (TH edition)
+      run: |
+        python3 -m pip install --upgrade git+https://github.com/ouseful-PR/nbval.git@table-test
+        #python3 -m pip install --upgrade git+https://github.com/innovationOUtside/nb_workflow_tools.git
+    - name: Restart postgres
+      run: |
+        sudo service postgresql restart
+    - name: Start mongo
+      run: |
+        sudo mongod --fork --logpath /dev/stdout --dbpath ${MONGO_DB_PATH}
+    - name: test changed files
+      run: |
+        for changed_file in ${{ steps.files.outputs.all }}; do
+          py.test  --nbval .${changed_file} || continue
+        done
