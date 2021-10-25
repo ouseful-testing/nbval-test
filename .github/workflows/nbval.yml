@@ -22,6 +22,9 @@ jobs:
     - name: Restart postgres
       run: |
         sudo service postgresql restart
+    - name: Start mongo
+      run: |
+        sudo mongod --fork --logpath /dev/stdout --dbpath ${MONGO_DB_PATH}
     - name: Run basic tests
       run: |
         py.test --nbval test.ipynb
