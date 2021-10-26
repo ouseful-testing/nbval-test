@@ -30,7 +30,7 @@ jobs:
         sudo mongod --fork --logpath /dev/stdout --dbpath ${MONGO_DB_PATH}
     - name: test changed files
       run: |
-        for file in ${{ steps.changed-files.outputs.all_modified_files }}; do
+        for file in "${{ steps.changed-files.outputs.all_modified_files }}"; do
             py.test  --nbval "$file" || continue
           done
         done
