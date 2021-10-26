@@ -31,7 +31,7 @@ jobs:
         sudo mongod --fork --logpath /dev/stdout --dbpath ${MONGO_DB_PATH}
     - name: test changed files
       run: |
-        mapfile -d ',' -t added_modified_files < <(printf '%s,' '${{ steps.changed-files.outputs.all_modified_files }}')
+        IFS="," read -a added_modified_files <<< "${{ steps.changed-files.outputs.all_modified_files }}"
         for added_modified_file in "${added_modified_files[@]}"; do
           py.test  --nbval "$added_modified_file" || continue
         done
