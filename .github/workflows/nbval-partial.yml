@@ -27,7 +27,7 @@ jobs:
     - name: test changed files
       run: |
         for changed_file in ${{ steps.files.outputs.all }}; do
-          if [[ ${changed_file} == *.ipynb ]] then
-           py.test  --nbval ${changed_file} || continue
+          if [[ "${changed_file}" == *.ipynb ]] then
+           py.test  --nbval "${changed_file}" || continue
           fi
         done
