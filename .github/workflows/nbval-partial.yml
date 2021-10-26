@@ -14,6 +14,9 @@ jobs:
 #        ref: nbval-test-tags
     - id: files
       uses: jitterbit/get-changed-files@v1
+      # Filepaths may contain spaces
+      with:
+        format: 'csv'
     - name: Install nbval (TH edition)
       run: |
         python3 -m pip install --upgrade git+https://github.com/ouseful-PR/nbval.git@table-test
@@ -26,8 +29,9 @@ jobs:
         sudo mongod --fork --logpath /dev/stdout --dbpath ${MONGO_DB_PATH}
     - name: test changed files
       run: |
-        for changed_file in ${{ steps.files.outputs.all }}; do
-          if [[ "${changed_file}" == *.ipynb ]] then
-           py.test  --nbval "${changed_file}" || continue
+        mapfile -d ',' -t added_modified_files < <(printf '%s,' '${{ steps.files.outputs.added_modified }}')
+        for added_modified_file in "${added_modified_files[@]}"; do
+          if [[ "${added_modified_file}" == *.ipynb ]] then
+           py.test  --nbval "${added_modified_file}" || continue
           fi
         done
