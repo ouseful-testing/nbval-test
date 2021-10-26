@@ -21,7 +21,7 @@ jobs:
           .ipynb$
     - name: Install nbval (TH edition)
       run: |
-        python3 -m pip install --upgrade git+https://github.com/ouseful-PR/nbval.git@table-test
+        python3 -m pip install --upgrade https://github.com//ouseful-PR/nbval/archive/table-test.zip
         #python3 -m pip install --upgrade git+https://github.com/innovationOUtside/nb_workflow_tools.git
     - name: Restart postgres
       run: |
