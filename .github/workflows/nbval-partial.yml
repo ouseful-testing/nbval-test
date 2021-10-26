@@ -34,3 +34,4 @@ jobs:
             py.test  --nbval "$file" || continue
           done
         done
+      continue-on-error: true
