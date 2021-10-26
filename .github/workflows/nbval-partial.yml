@@ -35,4 +35,5 @@ jobs:
         for added_modified_file in "${added_modified_files[@]}"; do
           py.test  --nbval "$added_modified_file" || continue
         done
+      shell: bash
       continue-on-error: true
