@@ -18,7 +18,7 @@ jobs:
     - uses: actions/checkout@master
     - name: Install nbval (TH edition)
       run: |
-        python3 -m pip install --user --upgrade git+https://github.com/ouseful-PR/nbval.git@table-test
+        python3 -m pip install --user --upgrade https://github.com//ouseful-PR/nbval/archive/table-test.zip
     - name: Restart postgres
       run: |
         sudo service postgresql restart
