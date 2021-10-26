@@ -31,7 +31,7 @@ jobs:
       run: |
         mapfile -d ',' -t added_modified_files < <(printf '%s,' '${{ steps.files.outputs.added_modified }}')
         for added_modified_file in "${added_modified_files[@]}"; do
-          if [[ "${added_modified_file}" == *.ipynb ]] then
+          if [[ "${added_modified_file}" == *.ipynb ]]; then
            py.test  --nbval "${added_modified_file}" || continue
           fi
         done
