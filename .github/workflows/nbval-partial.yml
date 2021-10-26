@@ -12,11 +12,11 @@ jobs:
     - uses: actions/checkout@master
 #      with:
 #        ref: nbval-test-tags
-    - id: files
-      uses: jitterbit/get-changed-files@v1
-      # Filepaths may contain spaces
+    - id: changed-files
+      uses: tj-actions/changed-files@v11.1
       with:
-        format: 'csv'
+          files: |
+            .ipynb$
     - name: Install nbval (TH edition)
       run: |
         python3 -m pip install --upgrade git+https://github.com/ouseful-PR/nbval.git@table-test
@@ -29,10 +29,7 @@ jobs:
         sudo mongod --fork --logpath /dev/stdout --dbpath ${MONGO_DB_PATH}
     - name: test changed files
       run: |
-        bash
-        mapfile -d ',' -t added_modified_files < <(printf '%s,' '${{ steps.files.outputs.added_modified }}')
-        for added_modified_file in "${added_modified_files[@]}"; do
-          if [[ "${added_modified_file}" == *.ipynb ]]; then
-           py.test  --nbval "${added_modified_file}" 
-          fi
+        for file in ${{ steps.changed-files.outputs.all_modified_files }}; do
+            py.test  --nbval "$file" || continue
+          done
         done
