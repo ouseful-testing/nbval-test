@@ -14,7 +14,7 @@ jobs:
         fetch-depth: 0 # or 2?
 #        ref: nbval-test-tags
     - id: changed-files
-      uses: tj-actions/changed-files@v11.1
+      uses: tj-actions/changed-files@v11.2
       with:
           files: |
             .ipynb$
@@ -30,7 +30,7 @@ jobs:
         sudo mongod --fork --logpath /dev/stdout --dbpath ${MONGO_DB_PATH}
     - name: test changed files
       run: |
-        for file in "${{ steps.changed-files.outputs.all_modified_files }}"; do
+        for file in ${{ steps.changed-files.outputs.all_modified_files }}; do
             py.test  --nbval "$file" || continue
           done
         done
