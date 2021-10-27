@@ -55,4 +55,4 @@ jobs:
           py.test  --nbval "$added_modified_file" || continue
         done
       shell: bash
-      continue-on-error: true
+      #continue-on-error: true
