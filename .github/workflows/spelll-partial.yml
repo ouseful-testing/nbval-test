@@ -1,0 +1,61 @@
+name: spelling-partial-test
+on:
+  push
+
+jobs:
+  changed-nb:
+    runs-on: ubuntu-latest
+    # Set job outputs to values from filter step
+    outputs:
+      notebooks: ${{ steps.filter.outputs.notebooks }}
+    steps:
+    # (For pull requests it's not necessary to checkout the code)
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
+    - uses: dorny/paths-filter@v2
+      id: filter
+      with:
+        filters: |
+          notebooks:
+            - '**.ipynb'
+
+
+  nbval-partial-demo:
+    needs: changes
+    if: ${{ needs.changes.outputs.notebooks == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+      with:
+        fetch-depth: 0 # or 2?
+#        ref: nbval-test-tags
+    - id: changed-files
+      uses: tj-actions/changed-files@v11.2
+      with:
+        separator: ','
+        files: |
+          .ipynb$
+    - name: Install nbval (TH edition)
+      run: |
+        python3 -m pip install --upgrade https://github.com/ouseful-PR/nbval/archive/table-test.zip
+                python3 -m pip install --upgrade https://github.com/innovationOUtside/nb_spellchecker/archive/main.zip
+        python3 -m pip install --upgrade https://github.com/ouseful-PR/pyspelling/archive/th-ipynb.zip
+    - name: spellcheck files
+      # This runs over all files; would be neater to just run over specified file
+      run: |
+        touch typos.txt
+        touch .wordlist.txt
+        apt-get update && apt-get install -y aspell aspell-en
+        pyspelling -c .ipyspell.yml > typos.txt
+        nb_spellchecker reporter -r summary_report.txt
+
+        cat summary_report.txt
+      shell: bash
+    - name: Upload typos
+      uses: actions/upload-artifact@v2
+      with:
+        name: typos
+        path: |
+         typos.txt
+         summary_report.txt
