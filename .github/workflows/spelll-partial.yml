@@ -45,10 +45,11 @@ jobs:
     - name: spellcheck files
       # This runs over all files; would be neater to just run over specified file
       run: |
-        #touch typos.txt
+        touch typos.txt
         touch .wordlist.txt
         #pyspelling -c .ipyspell.yml > typos.txt
-        pyspelling -c .ipyspell.yml
+        pyspelling -c .ipyspell.yml | tee -a typos.txt
+        cat typos.txt
         #nb_spellchecker reporter -r summary_report.txt
         #cat summary_report.txt
       shell: bash
