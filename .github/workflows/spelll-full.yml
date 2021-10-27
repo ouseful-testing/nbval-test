@@ -1,0 +1,42 @@
+name: spelling-full-test
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'     
+        required: true
+        default: 'warning'
+      tags:
+        description: 'Testing full pyspelling' 
+
+jobs:
+  nbval-full-demo:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Install spelling packages
+      run: |
+        sudo apt-get update && sudo apt-get install -y aspell aspell-en
+        python3 -m pip install --upgrade https://github.com/ouseful-PR/nbval/archive/table-test.zip
+        python3 -m pip install --upgrade https://github.com/innovationOUtside/nb_spellchecker/archive/main.zip
+        python3 -m pip install --upgrade https://github.com/ouseful-PR/pyspelling/archive/th-ipynb.zip
+    - name: spellcheck all files
+      # This runs over all files
+      run: |
+        touch typos.txt
+        touch .wordlist.txt
+        pyspelling -c .ipyspell.yml | tee -a typos.txt || continue
+        cat typos.txt
+        #touch summary_report.txt
+        #nb_spellchecker reporter -r summary_report.txt
+        #cat summary_report.txt
+      shell: bash
+      # We could let the action fail on errors
+      continue-on-error: true
+    - name: Upload all typos
+      uses: actions/upload-artifact@v2
+      with:
+        name: typos
+        path: |
+         typos.txt
+#         summary_report.txt
