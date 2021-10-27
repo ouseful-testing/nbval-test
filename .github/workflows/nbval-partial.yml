@@ -48,6 +48,7 @@ jobs:
       # This runs over all files; would be neater to just run over specified file
       run: |
         touch typos.txt
+        touch wordlist.txt
         pyspelling -c .ipyspell.yml > typos.txt
         nb_spellchecker reporter -r summary_report.txt
       shell: bash
