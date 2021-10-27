@@ -60,7 +60,7 @@ jobs:
       shell: bash
       #continue-on-error: true
     - name: Upload typos
-    uses: actions/upload-artifact@v2
-    with:
-      name: typos
-      path: codespell-typos.txt
+      uses: actions/upload-artifact@v2
+      with:
+        name: typos
+        path: codespell-typos.txt
