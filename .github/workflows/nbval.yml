@@ -28,6 +28,7 @@ jobs:
     - name: Run basic tests
       run: |
         py.test --nbval test.ipynb
+      # The following line means that the action will continue rather than fail if this step fails
       continue-on-error: true
     - name: TM351 installation test
       run: |
