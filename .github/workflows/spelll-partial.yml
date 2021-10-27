@@ -3,7 +3,7 @@ on:
   push
 
 jobs:
-  changed-nb:
+  changednb:
     runs-on: ubuntu-latest
     # Set job outputs to values from filter step
     outputs:
@@ -22,8 +22,8 @@ jobs:
 
 
   nbval-partial-demo:
-    needs: changed-nb
-    if: ${{ needs.changes.outputs.notebooks == 'true' }}
+    needs: changednb
+    if: ${{ needs.changednb.outputs.notebooks == 'true' }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
