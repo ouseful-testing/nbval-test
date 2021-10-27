@@ -1,0 +1,42 @@
+name: example-release
+on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'     
+        required: true
+        default: 'warning'
+      tags:
+        description: 'Testing release'
+        
+jobs:
+  release-demo:
+    runs-on: ubuntu-latest
+    container:
+      image: ouvocl/vce-tm351-monolith
+    steps:
+    - uses: actions/checkout@master
+    - name: Install nbval (TH edition) and workflow tools
+      run: |
+        python3 -m pip install --upgrade https://github.com//ouseful-PR/nbval/archive/table-test.zip
+        python3 -m pip install https://github.com/innovationOUtside/nb_workflow_tools/archive/master.zip
+    - name: Restart postgres
+      run: |
+        sudo service postgresql restart
+    - name: Start mongo
+      run: |
+        sudo mongod --fork --logpath /dev/stdout --dbpath ${MONGO_DB_PATH}
+    - name: Run basic tests
+      run: |
+        # Test all files we want in the release
+        py.test --nbval TM351*.ipynb
+     - name: Package files
+      run: |
+        # Package all files we want in the release
+        tm351zip -r clearOutput -a TM351*.ipynb release.zip
+     - name: Create Release
+       id: create_release
+       uses: softprops/action-gh-release@v1
+       with:
+          files: |
+            release.zip
