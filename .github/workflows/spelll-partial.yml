@@ -48,17 +48,17 @@ jobs:
         touch typos.txt
         touch .wordlist.txt
         #pyspelling -c .ipyspell.yml > typos.txt
-        pyspelling -c .ipyspell.yml | tee -a typos.txt
+        pyspelling -c .ipyspell.yml | tee -a typos.txt || continue
         cat typos.txt
         #nb_spellchecker reporter -r summary_report.txt
         #cat summary_report.txt
       shell: bash
       # We could let the action fail on errors
       continue-on-error: true
-#   - name: Upload typos
-#      uses: actions/upload-artifact@v2
-#      with:
-#        name: typos
-#        path: |
-#         typos.txt
+   - name: Upload typos
+      uses: actions/upload-artifact@v2
+      with:
+        name: typos
+        path: |
+         typos.txt
 #         summary_report.txt
