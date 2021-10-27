@@ -36,7 +36,7 @@ jobs:
         separator: ','
         files: |
           .ipynb$
-    - name: Install nbval (TH edition)
+    - name: Install spelling packages
       run: |
         sudo apt-get update && sudo apt-get install -y aspell aspell-en
         python3 -m pip install --upgrade https://github.com/ouseful-PR/nbval/archive/table-test.zip
@@ -45,17 +45,17 @@ jobs:
     - name: spellcheck files
       # This runs over all files; would be neater to just run over specified file
       run: |
-        touch typos.txt
+        #touch typos.txt
         touch .wordlist.txt
-        pyspelling -c .ipyspell.yml > typos.txt
-        nb_spellchecker reporter -r summary_report.txt
-
-        cat summary_report.txt
+        #pyspelling -c .ipyspell.yml > typos.txt
+        pyspelling -c .ipyspell.yml
+        #nb_spellchecker reporter -r summary_report.txt
+        #cat summary_report.txt
       shell: bash
-    - name: Upload typos
-      uses: actions/upload-artifact@v2
-      with:
-        name: typos
-        path: |
-         typos.txt
-         summary_report.txt
+#   - name: Upload typos
+#      uses: actions/upload-artifact@v2
+#      with:
+#        name: typos
+#        path: |
+#         typos.txt
+#         summary_report.txt
