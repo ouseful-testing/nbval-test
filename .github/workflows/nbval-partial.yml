@@ -40,8 +40,23 @@ jobs:
           .ipynb$
     - name: Install nbval (TH edition)
       run: |
-        python3 -m pip install --upgrade https://github.com//ouseful-PR/nbval/archive/table-test.zip
+        python3 -m pip install --upgrade https://github.com/ouseful-PR/nbval/archive/table-test.zip
+        python3 -m pip install --upgrade https://github.com/ouseful-PR/pyspelling/archive/th-ipynb.zip
+        python3 -m pip install --upgrade https://github.com/innovationOUtside/nb_spellchecker/archive/main.zip
         #python3 -m pip install --upgrade git+https://github.com/innovationOUtside/nb_workflow_tools.git
+    - name: spellcheck files
+      # This runs over all files; would be neater to just run over specified file
+      run: |
+        touch typos.txt
+        pyspelling -c .ipyspell.yml > typos.txt
+        nb_spellchecker reporter -r summary_report.txt
+      shell: bash
+    - name: Upload typos
+      uses: actions/upload-artifact@v2
+      with:
+        name: typos
+        path: |
+         codespell-typos.txt
     - name: Restart postgres
       run: |
         sudo service postgresql restart
