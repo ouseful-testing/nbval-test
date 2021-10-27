@@ -30,13 +30,13 @@ jobs:
       run: |
         # Test all files we want in the release
         py.test --nbval TM351*.ipynb
-     - name: Package files
+    - name: Package files
       run: |
         # Package all files we want in the release
         tm351zip -r clearOutput -a TM351*.ipynb release.zip
-     - name: Create Release
-       id: create_release
-       uses: softprops/action-gh-release@v1
-       with:
-          files: |
-            release.zip
+    - name: Create Release
+      id: create_release
+      uses: softprops/action-gh-release@v1
+      with:
+        files: |
+          release.zip
