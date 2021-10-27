@@ -56,7 +56,8 @@ jobs:
       with:
         name: typos
         path: |
-         codespell-typos.txt
+         typos.txt
+         summary_report.txt
     - name: Restart postgres
       run: |
         sudo service postgresql restart
