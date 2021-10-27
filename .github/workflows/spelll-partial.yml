@@ -22,7 +22,7 @@ jobs:
 
 
   nbval-partial-demo:
-    needs: changes
+    needs: changed-nb
     if: ${{ needs.changes.outputs.notebooks == 'true' }}
     runs-on: ubuntu-latest
     steps:
