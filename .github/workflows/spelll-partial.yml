@@ -52,6 +52,8 @@ jobs:
         #nb_spellchecker reporter -r summary_report.txt
         #cat summary_report.txt
       shell: bash
+      # We could let the action fail on errors
+      continue-on-error: true
 #   - name: Upload typos
 #      uses: actions/upload-artifact@v2
 #      with:
