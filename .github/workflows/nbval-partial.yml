@@ -41,6 +41,7 @@ jobs:
     - name: Install nbval (TH edition)
       run: |
         python3 -m pip install --upgrade https://github.com//ouseful-PR/nbval/archive/table-test.zip
+        python3 -m pip install codespell
         #python3 -m pip install --upgrade git+https://github.com/innovationOUtside/nb_workflow_tools.git
     - name: Restart postgres
       run: |
@@ -53,6 +54,13 @@ jobs:
         IFS="," read -a added_modified_files <<< "${{ steps.changed-files.outputs.all_modified_files }}"
         for added_modified_file in "${added_modified_files[@]}"; do
           py.test  --nbval "$added_modified_file" || continue
+          codespell --skip="*.csv,*.json,*.xml" >> codespell-typos.txt
         done
+        cat codespell-typos.txt
       shell: bash
       #continue-on-error: true
+    - name: Upload typos
+    uses: actions/upload-artifact@v2
+    with:
+      name: typos
+      path: codespell-typos.txt
