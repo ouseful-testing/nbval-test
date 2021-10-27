@@ -48,8 +48,7 @@ jobs:
         #touch typos.txt
         touch .wordlist.txt
         #pyspelling -c .ipyspell.yml > typos.txt
-        pyspelling -c .ipyspell.yml &> typos.txt
-        cat typos.txt
+        pyspelling -c .ipyspell.yml
         #nb_spellchecker reporter -r summary_report.txt
         #cat summary_report.txt
       shell: bash
