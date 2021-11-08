@@ -1,13 +1,6 @@
 name: nbval-test
 on:
-  workflow_dispatch:
-    inputs:
-      logLevel:
-        description: 'Log level'     
-        required: true
-        default: 'warning'
-      tags:
-        description: 'Testing nbval' 
+  workflow_dispatch
 
 jobs:
   nbval-demo:
@@ -29,7 +22,7 @@ jobs:
       run: |
         py.test --nbval test.ipynb
       # The following line means that the action will continue rather than fail if this step fails
-      continue-on-error: true
+      #continue-on-error: true
     - name: TM351 installation test
       run: |
         py.test --nbval TM351*.ipynb
