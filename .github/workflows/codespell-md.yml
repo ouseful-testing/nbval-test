@@ -7,10 +7,12 @@ jobs:
   changes-spellcheck:
     runs-on: ubuntu-latest
     steps:
+
+
     # Test for notebooks
     - uses: dorny/paths-filter@v2
-    id: filter
-    with:
+      id: filter
+      with:
         # Enable listing of files matching each filter.
         # Paths to files will be available in `${FILTER_NAME}_files` output variable.
         # Paths will be escaped and space-delimited.
@@ -20,12 +22,12 @@ jobs:
         # In this example changed markdown will be spellchecked using aspell
         # If we specify we are only interested in added or modified files, deleted files are ignored
         filters: |
-            notebooks:
-                - added|modified: '**.md'
+          notebooks:
+            - added|modified: '**.md'
 
-    - name: Process Changed Notebooks
-    if: ${{ steps.filter.outputs.notebooks == 'true' }}
-    run: |
+    - name: Process changed files
+      if: ${{ steps.filter.outputs.notebooks == 'true' }}
+      run: |
         sudo apt-get update && sudo apt-get install -y aspell aspell-en
         pip install codedspell
 
