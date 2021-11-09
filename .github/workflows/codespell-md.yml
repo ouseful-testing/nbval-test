@@ -11,7 +11,7 @@ jobs:
     # Checkout
     - uses: actions/checkout@v2
 
-    # Test for notebooks
+    # Test for markdown files
     - uses: dorny/paths-filter@v2
       id: filter
       with:
@@ -52,4 +52,4 @@ jobs:
           # even with errors, the action continues
           codespell "$added_modified_file" || continue
         done
-      shell: bash   
+      shell: bash

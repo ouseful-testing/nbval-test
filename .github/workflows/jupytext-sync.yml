@@ -7,6 +7,10 @@ jobs:
   sync-jupytext:
     runs-on: ubuntu-latest
     steps:
+
+    # Checkout
+    - uses: actions/checkout@v2
+    
     # Test for markdown
     - uses: dorny/paths-filter@v2
       id: filter
