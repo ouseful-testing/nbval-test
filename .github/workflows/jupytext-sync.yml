@@ -10,7 +10,7 @@ jobs:
 
     # Checkout
     - uses: actions/checkout@v2
-    
+
     # Test for markdown
     - uses: dorny/paths-filter@v2
       id: filter
@@ -43,4 +43,10 @@ jobs:
         # we can pass them directly
         # This will only synch files if the md doc include jupytext metadata
         # and has one or more paired docs defined
-        jupytext --sync ${{ steps.filter.outputs.notebooks_files }}   
+        jupytext --sync ${{ steps.filter.outputs.notebooks_files }}
+
+    # Auto commit any updated notebook files
+    - uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        # This would be more useful if the git hash were referenced?
+        commit_message: Jupytext synch - modified, paired .md files ($GITHUB_SHA)
