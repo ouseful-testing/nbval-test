@@ -31,7 +31,7 @@ jobs:
       if: ${{ steps.filter.outputs.notebooks == 'true' }}
       run: |
         sudo apt-get update && sudo apt-get install -y aspell aspell-en
-        pip install codedspell
+        pip install codespell
 
         # If a command accepts a list of files,
         # we can pass them directly
