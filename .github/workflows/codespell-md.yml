@@ -8,6 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 
+    # Checkout
+    - uses: actions/checkout@v2
 
     # Test for notebooks
     - uses: dorny/paths-filter@v2
