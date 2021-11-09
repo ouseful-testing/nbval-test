@@ -38,7 +38,7 @@ jobs:
       run: |
         # If a command accepts a list of files,
         # we can pass them directly
-        codespell ${{ steps.filter.outputs.notebooks_files }}
+        #codespell ${{ steps.filter.outputs.notebooks_files }}
 
         # Alternatively, we might iterate over files one at a time
         # If we had comma separated files, we could specify separator
