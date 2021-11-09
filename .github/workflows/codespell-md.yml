@@ -38,7 +38,8 @@ jobs:
       run: |
         # If a command accepts a list of files,
         # we can pass them directly
-        #codespell ${{ steps.filter.outputs.notebooks_files }}
+        # This will cause the action to error if there is a typo
+        codespell ${{ steps.filter.outputs.notebooks_files }}
 
         # Alternatively, we might iterate over files one at a time
         # If we had comma separated files, we could specify separator
@@ -47,6 +48,8 @@ jobs:
         read -a added_modified_files <<< "${{ steps.filter.outputs.notebooks_files }}"
         # Then iterate over each filename
         for added_modified_file in "${added_modified_files[@]}"; do
+          # The || continue statement will ensure that
+          # even with errors, the action continues
           codespell "$added_modified_file" || continue
         done
       shell: bash   
