@@ -9,8 +9,8 @@ jobs:
     steps:
     # Test for markdown
     - uses: dorny/paths-filter@v2
-    id: filter
-    with:
+      id: filter
+      with:
         # Enable listing of files matching each filter.
         # Paths to files will be available in `${FILTER_NAME}_files` output variable.
         # Paths will be escaped and space-delimited.
@@ -28,8 +28,8 @@ jobs:
         # rm ${FILEPATH%.md}.ipynb
   
     - name: Install Packages if changed files
-    if: ${{ steps.filter.outputs.notebooks == 'true' }}
-    run: |
+      if: ${{ steps.filter.outputs.notebooks == 'true' }}
+      run: |
         pip install jupytext
 
     - name: Synch changed files
