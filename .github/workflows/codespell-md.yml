@@ -27,12 +27,15 @@ jobs:
           notebooks:
             - added|modified: '**.md'
 
-    - name: Process changed files
+    - name: Install packages if changed files
       if: ${{ steps.filter.outputs.notebooks == 'true' }}
       run: |
         sudo apt-get update && sudo apt-get install -y aspell aspell-en
         pip install codespell
 
+    - name: Process changed files
+      if: ${{ steps.filter.outputs.notebooks == 'true' }}
+      run: |
         # If a command accepts a list of files,
         # we can pass them directly
         codespell ${{ steps.filter.outputs.notebooks_files }}
