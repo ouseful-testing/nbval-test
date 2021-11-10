@@ -1,6 +1,8 @@
 name: nbval-partial-test
 on:
-  push
+  push:
+  pull_request:
+    types: [opened, edited]
 
 jobs:
   changes:
