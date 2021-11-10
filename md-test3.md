@@ -10,7 +10,7 @@ thiss is wronng.
 
 wronng and more
 
-And here aaproximNately .? More ...
+And here aaproximately .? More ...
 sdsdsds
 
 sdsd
