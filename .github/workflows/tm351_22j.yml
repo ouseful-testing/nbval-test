@@ -17,15 +17,17 @@ jobs:
 #    - name: Mock entrypoint
 #      run: |
 #        /usr/local/bin/repo2docker-entrypoint tini -g --
-# So instad we have to manually do what the original startup script did
+# So instead we have to manually do what the original startup script did
+# For the jh container, we also need to update paths as they get updated at start-time...
     - name: Restart postgres
       run: |
+        PGDATA=/home/jovyan/.postgres/12/main
         sudo service postgresql restart
     - name: Start mongo
       run: |
         # Whilst we debug...
         #sudo mongod --logpath /dev/stdout --dbpath ${MONGO_DB_PATH}
-        mkdir -p ${MONGO_DB_PATH}
+        MONGO_DB_PATH=/home/jovyan/.mongo/
         sudo mongod --fork --logpath /dev/stdout --dbpath ${MONGO_DB_PATH}
     - name: Run basic tests
       run: |
