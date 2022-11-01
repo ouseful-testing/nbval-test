@@ -11,7 +11,7 @@ jobs:
     - uses: actions/checkout@v1
     - name: Install nbval (TH edition)
       run: |
-        python3 -m pip install --upgrade https://github.com/ouseful-PR/nbval/archive/table-test.zip
+        sudo python3 -m pip install --upgrade https://github.com/ouseful-PR/nbval/archive/table-test.zip
     - name: Run basic tests
       run: |
         py.test --nbval test.ipynb
