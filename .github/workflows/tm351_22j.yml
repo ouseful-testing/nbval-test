@@ -6,7 +6,7 @@ jobs:
   nbval-demo:
     runs-on: ubuntu-latest
     container:
-      image: ouvocl/ouvocl/vce-tm351-jh:22j-b6
+      image: ouvocl/vce-tm351-jh:22j-b6
     steps:
     - uses: actions/checkout@master
     - name: Install nbval (TH edition)
