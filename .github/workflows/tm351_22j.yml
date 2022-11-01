@@ -25,10 +25,8 @@ jobs:
     - name: Start mongo
       run: |
         # Whilst we debug...
-        ls -Al /home/jovyan
-        sudo mongod --logpath /dev/stdout --dbpath /home/jovyan/.mongo/
-        #MONGO_DB_PATH=/home/jovyan/.mongo/
-        #sudo mongod --fork --logpath /dev/stdout --dbpath /home/jovyan/.mongo/
+        #sudo mongod --logpath /dev/stdout --dbpath /home/jovyan/.mongo/
+        sudo mongod --fork --logpath /dev/stdout --dbpath /var/db/data/mongo
     - name: Run basic tests
       run: |
         py.test --nbval test.ipynb
