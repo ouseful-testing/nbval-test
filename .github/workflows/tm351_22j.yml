@@ -13,12 +13,15 @@ jobs:
     - name: Install nbval (TH edition)
       run: |
         python3 -m pip install --upgrade https://github.com/ouseful-PR/nbval/archive/table-test.zip
-    - name: Restart postgres
+    - name: Mock entrypoint
       run: |
-        sudo service postgresql restart
-    - name: Start mongo
-      run: |
-        sudo mongod --fork --logpath /dev/stdout --dbpath ${MONGO_DB_PATH}
+        /usr/local/bin/repo2docker-entrypoint tini -g --
+#    - name: Restart postgres
+#      run: |
+#        sudo service postgresql restart
+#    - name: Start mongo
+#      run: |
+#        sudo mongod --fork --logpath /dev/stdout --dbpath ${MONGO_DB_PATH}
     - name: Run basic tests
       run: |
         py.test --nbval test.ipynb
