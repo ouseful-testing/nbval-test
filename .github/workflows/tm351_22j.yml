@@ -8,7 +8,7 @@ jobs:
     container:
       image: ouvocl/vce-tm351-jh:22j-b6
     steps:
-    - uses: actions/checkout@master
+    - uses: actions/checkout@v3
     - name: Install nbval (TH edition)
       run: |
         python3 -m pip install --upgrade https://github.com/ouseful-PR/nbval/archive/table-test.zip
