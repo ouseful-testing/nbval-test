@@ -7,9 +7,10 @@ jobs:
     runs-on: ubuntu-latest
     container:
       image: ouvocl/vce-tm351-jh:22j-b6
+      # The Github Action fails if we arenlt running as root
       options: --user root
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v3
     - name: Install nbval (TH edition)
       run: |
         python3 -m pip install --upgrade https://github.com/ouseful-PR/nbval/archive/table-test.zip
